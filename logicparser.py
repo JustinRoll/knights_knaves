@@ -31,6 +31,47 @@ class BinOp:
         self.left = "" #base entity is knight or knave
         self.right = ""
 
+#class for parsing abstract syntax trees into a true or false value
+class Evaluator:
+    def evalUnOp(self, unop):
+        if isinstance(unop.entity, BinOp):
+            result = self.evalBinop(unop.entity)
+        elif isinstance(unop.entity, UnOp):
+            result = self.evalUnop(entity)
+        else:
+            result = unop.entity.KNIGHT #base case, boolean true if knight, false if not
+
+        #once we are done parsing the recursive data type    
+        if unop.op == op.NEGATION:
+            return ~result
+        else:
+            return result
+    
+    def evalBinOp(self, binop):
+        if isinstance(binop.left, BinOp):
+            leftResult = self.evalBinop(left)
+        elif isinstance(binop.left, UnOp):
+            leftResult = self.evalUnop(binop.left)
+        else:
+            leftResult = binop.left.KNIGHT #base case, boolean true if knight, false if not
+            
+        if isinstance(binop.right, BinOp):
+            leftResult = self.evalBinop(binop.right)
+        elif isinstance(binop.right, UnOp):
+            leftResult = self.evalUnop(binop.right)
+        else:
+            leftResult = binop.right.KNIGHT #base case, boolean true if knight, false if not 
+        #once we are done parsing the recursive data type    
+        if binop.op == op.AND:
+            return leftResult and rightResult
+        elif binop.op == op.OR:
+            return leftResult or rightResult
+
+        elif binop.op == op.XOR:
+            return leftResult != rightResult
+        else:
+            return #error here
+
 class LogicParser:
     def __init__(self, text):
         self.entities = self.parseEntities(text)
