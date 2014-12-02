@@ -1,5 +1,6 @@
 import nltk
-#from nltk import CFG
+from nltk import CFG
+from nltk.grammar import ContextFreeGrammar
 from nltk import ChartParser
 
 
