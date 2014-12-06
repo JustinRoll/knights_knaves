@@ -1,0 +1,4 @@
+You meet two inhabitants: Zoey and Mel. Zoey tells you that Mel is a knave. Mel says, `Neither Zoey nor I are knaves.' 
+You meet two inhabitants: Peggy and Zippy. Peggy tells you that 'of Zippy and I, exactly one is a knight'. Zippy tells you that only a knave would say that Peggy is a knave. 
+You meet two inhabitants: Sue and Zippy. Sue says that Zippy is a knave. Zippy says, `I and Sue are knights.'
+You meet two inhabitants: Sally and Zippy. Sally claims, `I and Zippy are not the same.' Zippy says, `Of I and Sally, exactly one is a knight.
