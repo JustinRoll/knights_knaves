@@ -51,4 +51,47 @@ def test():
         prover = ResolutionProverCommand(c, [p1])
         print(prover.prove())
         print(prover.proof())
-test()
+
+def test2():
+#You meet two inhabitants: Peggy and Zippy. Peggy tells you that 'of Zippy and I, exactly one is a knight'. Zippy tells you that only a knave would say that Peggy is a knave.
+
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('-knight(peggy) and -knight(zippy)') #peggy and zoey are knaves
+        c  = read_expr('((knight(peggy) and knight(zippy) or (-knight(peggy) and -knight(zippy))) and -knight(zippy)) and (-knight(peggy) and -knight(zippy)) ')
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
+
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('knight(peggy) and knight(zippy)') #zoey and mel are knights
+        c  = read_expr('-(knight(peggy) and knight(zippy) or (-knight(peggy) and -knight(zippy))) and knight(peggy)') #we are trying to prove that Zoey is a knight, Mel is a knave
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
+
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('-knight(peggy) and knight(zippy)') #zoey knight, mel knave
+        c  = read_expr('-(knight(peggy) and knight(zippy) or (-knight(peggy) and -knight(zippy))) and knight(peggy)') #we are trying to prove that Zoey is a knight, Mel is a knave
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove()) 
+
+
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('knight(peggy) and -knight(zippy)') #zoey knave, mel knight
+        c  = read_expr('(knight(peggy) and knight(zippy) or (-knight(peggy) and -knight(zippy))) and -knight(peggy)') #we are trying to prove that Zoey is a knight, Mel is a knave
+        #prover = Prover9Command(c, [p1])
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
+        print(prover.proof()) 
+
+test2()

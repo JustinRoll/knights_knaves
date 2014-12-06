@@ -154,51 +154,51 @@ class KnightsOrKnaves:
 
 
 class KnightProver:
-    def __init__(self, text):
-        self.entities = self.parseEntities(text)
-        sentences = [sent for sent in sent_tokenize(text)]
-        print(sentences)
-        taggedSentences = [self.tag(sent) for sent in sentences]
-        
-        for sent in sentences:
-            self.parseExpression(sent)
 
-    def evaluate(expr1, expr2, goal):
+    def test(phraseDict):
+    #Q:You meet two inhabitants: Zoey and Mel. Zoey tells you that Mel is a knave. Mel says, `Neither Zoey nor I are knaves.'
+#Z: Unop: ~M, M:Binop  ~Z and ~M
+#both knaves
+        #for each possible knight and knave combination
+
+
         logic._counter._value = 0
-        lp = LogicParser()
-        p1 = lp.parse('man(socrates)')
-        p2 = lp.parse('all x.(man(x) -> mortal(x))')
-        c  = lp.parse('mortal(socrates)')
-        print(Prover9().prove(c, [p1,p2]))
+        prover = Prover9()
 
-    def evalOp(self, binop):
-            if isinstance(binop.left, BinOp):
-                leftResult = self.evalBinop(left)
-            elif isinstance(binop.left, UnOp):
-                leftResult = self.evalUnop(binop.left)
-            else:
-                leftResult = binop.left.TRUTH #base case, boolean true if knight, false if not
-            
-            if isinstance(binop.right, BinOp):
-                leftResult = self.evalBinop(binop.right)
-            elif isinstance(binop.right, UnOp):
-                leftResult = self.evalUnop(binop.right)
-            else:
-                leftResult = binop.right.TRUTH #base case, boolean true if knight, false if not 
-            
-            if binop.op == Op.AND:
-                return leftResult and rightResult
-            elif binop.op == Op.OR:
-                return leftResult or rightResult
+        lp = LogicParser()  
+        p1 = read_expr('-knight(mel) and -knight(zoey)') #zoey and mel are knaves
+        c  = read_expr('knight(mel) and -(knight(zoey) and knight(mel))')
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
 
-            elif binop.op == Op.XOR:
-                return leftResult != rightResult
-            return 
+        logic._counter._value = 0
+        prover = Prover9()
 
-    def tag(self, sentence):
-        words = word_tokenize(sentence)
-        words = pos_tag(words)
-        return words
+        lp = LogicParser()  
+        p1 = read_expr('knight(mel) and knight(zoey)') #zoey and mel are knights
+        c  = read_expr('-knight(mel) and (knight(zoey) and knight(mel))') #we are trying to prove that Zoey is a knight, Mel is a knave
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
 
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('-knight(mel) and knight(zoey)') #zoey knight, mel knave
+        c  = read_expr('-knight(mel) and -(knight(zoey) and knight(mel))') #we are trying to prove that Zoey is a knight, Mel is a knave
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove()) 
+
+
+        logic._counter._value = 0
+        prover = Prover9()
+
+        lp = LogicParser()  
+        p1 = read_expr('knight(mel) and -knight(zoey)') #zoey knave, mel knight
+        c  = read_expr('(knight(mel)) and (knight(zoey) and knight(mel))') #we are trying to prove that Zoey is a knight, Mel is a knave
+        #prover = Prover9Command(c, [p1])
+        prover = ResolutionProverCommand(c, [p1])
+        print(prover.prove())
+        print(prover.proof()) 
 
 

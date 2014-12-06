@@ -1,10 +1,9 @@
 import nltk
-from nltk import CFG
-from nltk.grammar import ContextFreeGrammar
+import nltk.grammar
 from nltk import ChartParser
 
 
-kk_grammar = nltk.grammar.ContextFreeGrammar.fromstring("""
+kk_grammar = nltk.grammar.CFG.fromstring("""
 S -> Sp Sa St
 Sp -> P
 Sa -> 'tells' 'you' 'that' | 'says' | 'says' 'that' | 'claims' | 'claims' 'that' | 'tells you'
